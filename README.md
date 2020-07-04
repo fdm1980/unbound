@@ -14,7 +14,7 @@ This repository has two configurations.
 
 If you want to use Unbound in standalone fashion then you can proceed with installing the contrainer.  
 
-If you want to use Unbound with Stubby, this setup uses two containers.  One running Stubby and another running Unbound. Unbound forwards requests that are not in its cache to the Stubby container. Stubby then performs DNS resolution over TLS.  The Stubby container should be setup first since the Unbound installation will search for an existing container called "stubby" and then read the IP address of that container and automatically setup Unbound to forward requests to it.
+If you want to use Unbound with Stubby, this setup uses two containers.  One running Stubby and another running Unbound. Unbound forwards requests that are not in its cache to the Stubby container. Stubby then performs DNS resolution over TLS.  The Stubby container should be setup first since the Unbound installation will search for an existing container called "stubby" and obtain the IP address of that container and automatically setup Unbound to forward requests to it.
 
 By default, both containers are configured to use Cloudflare DNS.  
 
