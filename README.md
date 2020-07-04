@@ -1,52 +1,52 @@
-# Unbound DNS Server Docker Image
-
-## Supported tags and respective `Dockerfile` links
-
-- [`1.10.1`, `latest` (*1.10.1/Dockerfile*)](https://github.com/MatthewVance/unbound-docker/tree/master/1.10.0)
-- [`1.10.0`, (*1.10.0/Dockerfile*)](https://github.com/MatthewVance/unbound-docker/tree/master/1.10.0)
-- [`1.9.6`, (*1.9.6/Dockerfile*)](https://github.com/MatthewVance/unbound-docker/tree/master/1.9.6)
-- [`1.9.5`, (*1.9.5/Dockerfile*)](https://github.com/MatthewVance/unbound-docker/tree/master/1.9.5)
-- [`1.9.4`, (*1.9.4/Dockerfile*)](https://github.com/MatthewVance/unbound-docker/tree/master/1.9.4)
-- [`1.9.3`, (*1.9.3/Dockerfile*)](https://github.com/MatthewVance/unbound-docker/tree/master/1.9.3)
-- [`1.9.2`, (*1.9.2/Dockerfile*)](https://github.com/MatthewVance/unbound-docker/tree/master/1.9.2)
-- [`1.9.1`, (*1.9.1/Dockerfile*)](https://github.com/MatthewVance/unbound-docker/tree/master/1.9.1)
-- [`1.9.0`, (*1.9.0/Dockerfile*)](https://github.com/MatthewVance/unbound-docker/tree/master/1.9.0)
-- [`1.8.3`, (*1.8.3/Dockerfile*)](https://github.com/MatthewVance/unbound-docker/tree/master/1.8.3)
-- [`1.8.2`, (*1.8.2/Dockerfile*)](https://github.com/MatthewVance/unbound-docker/tree/master/1.8.2)
-- [`1.8.1`, (*1.8.1/Dockerfile*)](https://github.com/MatthewVance/unbound-docker/tree/master/1.8.1)
-- [`1.7.3`, (*1.7.3/Dockerfile*)](https://github.com/MatthewVance/unbound-docker/tree/master/1.7.3)
-- [`1.6.8`, (*1.6.8/Dockerfile*)](https://github.com/MatthewVance/unbound-docker/tree/master/1.6.8)
+# Unbound DNS Docker Image - tailored for unRAID use
 
 ## What is Unbound?
 
 Unbound is a validating, recursive, and caching DNS resolver.
 > [unbound.net](https://unbound.net/)
 
-## How to use this image
+## Standard usage
 
-### Standard usage
+This repository has two configurations.
 
-Run this container with the following command:
+1.  Standalone  
+2.  Use with Stubby  ([Stubby container](https://hub.docker.com/r/fdm80/stubby/))  
 
-```console
-docker run --name my-unbound -d -p 53:53/udp -p 53:53/tcp \
---restart=always mvance/unbound:latest
-```
+If you want to use Unbound in standalone fashion then you can proceed with installing the contrainer.  
 
-*For a DNS server with lots of short-lived connections, you may wish to consider
-adding `--net=host` to the run command for performance reasons. However, it is
-not required and some shared container hosting services may not allow it. You
-should also be aware `--net=host` can be a security risk in some situations. The
-[Center for Internet Security Docker 1.6
-Benchmark](https://benchmarks.cisecurity.org/tools2/docker/CIS_Docker_1.6_Benchmark_v1.0.0.pdf)
-recommends against this mode since it essentially tells Docker to not
-containerize the container's networking, thereby giving it full access to the
-host machine's network interfaces. It also mentions this option could cause the
-container to do unexpected things such as shutting down the Docker host as
-referenced in [Docker Issue #6401](https://github.com/docker/docker/issues/6401)
-. For the most secure deployment, unrelated services with confidential data
-should not be run on the same host or VPS. In such cases, using `--net=host`
-should have limited impact on security.*
+If you want to use Unbound with Stubby, this setup uses two containers.  One running Stubby and another running Unbound. Unbound forwards requests that are not in its cache to the Stubby container. Stubby then performs DNS resolution over TLS.  The Stubby container should be setup first since the Unbound installation will search for an existing container called "stubby" and then read the IP address of that container and automatically setup Unbound to forward requests to it.
+
+By default, both containers are configured to use Cloudflare DNS.  
+
+### How to use - unRAID template setup
+(assuming you use other DNS containers with "Network Type = Custom : br0" such as pihole or stubby)
+
+1.  Network Type = Custom : br0  
+  a.  Set your own IP address
+  
+2.  Port Mapping  
+  a.  Name:  Host Port 1  
+  b.  Host Port:  53  
+  c.  Connection Type:  TCP
+
+3.  Port Mapping  
+  a.  Name:  Host Port 2  
+  b.  Host Port:  53  
+  c.  Connection Type:  UDP  
+
+4.  Path/Volume Mapping  
+  a.  Name:  Appdata  
+  b.  Container Path:  /opt/unbound/etc/unbound/  
+  c.  Host Path:  /mnt/user/appdata/unbound/  
+  d.  Access Mode:  Read/Write  
+
+Start the container to allow it to create the "/appdata/unbound/" folder.  
+Stop the containter.  
+Download/copy the ".conf" files to the appdata folder.  
+> [Unbound config files (standalone - 3 files)](https://github.com/fdm1980/unbound/tree/master/unbound/)  
+> [Unbound config files (use with stubby - 2 files)](https://github.com/fdm1980/unbound/tree/master/unbound%20(use%20with%20stubby)/)  
+
+Restart the container.
 
 ### Serve Custom DNS Records for Local Network
 
