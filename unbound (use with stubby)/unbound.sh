@@ -346,7 +346,7 @@ server:
         forward-addr: @STUBBY@
 
 remote-control:
-  control-enable: no
+    control-enable: no
 
 EOT
 fi
