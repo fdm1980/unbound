@@ -103,10 +103,10 @@ server:
     log-servfail: no
 
     # Sets logfile lines to use a timestamp in UTC ascii.
-	log-time-ascii: yes
+    log-time-ascii: yes
 
     # Further limit logging
-    logfile: /dev/null
+    logfile: /dev/unbound.log
 
     # Only log errors
     verbosity: 0
