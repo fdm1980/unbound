@@ -337,6 +337,7 @@ server:
 
 remote-control:
     control-enable: no
+
 EOT
 fi
 
