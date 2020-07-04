@@ -93,6 +93,9 @@ server:
     # Do not print log lines that say why queries return SERVFAIL to clients
     log-servfail: no
 
+    # Sets logfile lines to use a timestamp in UTC ascii.
+	log-time-ascii: yes
+
     # Further limit logging
     logfile: /dev/null
 
