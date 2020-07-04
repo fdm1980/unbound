@@ -33,7 +33,7 @@ fi
 # This uses ping rather than 'dig +short stubby' to avoid needing dnsutils
 # package.
 stubby_ip=$(ping -4 -c 1 stubby | head -n 1 | cut -d ' ' -f 3 | cut -d '(' -f 2 | cut -d ')' -f 1)
-stubby_port=@8053
+stubby_port=@53
 stubby=$stubby_ip$stubby_port
 
 if [ ! -f /opt/unbound/etc/unbound/unbound.conf ]; then
@@ -186,7 +186,7 @@ server:
     # Perform additional queries for infrastructure data to harden the referral
     # path. Validates the replies if trust anchors are configured and the zones
     # are signed. This enforces DNSSEC validation on nameserver NS sets and the
-    # nameserver addresses that are encountered on the referral path to the 
+    # nameserver addresses that are encountered on the referral path to the
     # answer. Experimental option.
     harden-referral-path: no
 
@@ -335,6 +335,7 @@ server:
 
     # Include file for local-data and local-data-ptr
     include: /opt/unbound/etc/unbound/a-records.conf
+    include: /opt/unbound/etc/unbound/srv-records.conf
 
     ###########################################################################
     # FORWARD ZONE
