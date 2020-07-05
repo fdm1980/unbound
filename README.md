@@ -18,7 +18,7 @@ If you want to use Unbound with Stubby, this setup uses two containers.  One run
 
 By default, both containers are configured to use Cloudflare DNS.  
 
-### How to use - unRAID template setup
+## How to use - unRAID template setup
 (assuming you use other DNS containers with "Network Type = Custom : br0" such as pihole or stubby)
 
 1.  Network Type = Custom : br0  
