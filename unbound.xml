@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>unbound</Name>
+  <Repository>fdm80/unbound</Repository>
+  <Registry>https://hub.docker.com/r/fdm80/unbound/</Registry>
+  <Network>br0</Network>
+  <MyIP/>
+  <Shell>sh</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://hub.docker.com/r/fdm80/unbound/</Support>
+  <Project>https://github.com/fdm1980/unbound</Project>
+  <Overview>Unbound is a validating, recursive, caching DNS resolver.&#xD;
+&#xD;
+Use the ":latest" tag for standalone Unbound use.&#xD;
+Use the ":latest-use-stubby" tag for use with the Stubby container.</Overview>
+  <Category>Network:DNS</Category>
+  <WebUI/>
+  <TemplateURL></TemplateURL>
+  <Icon>https://i.imgur.com/cnsNS1O.png</Icon>
+  <ExtraParams>--restart=always</ExtraParams>
+  <PostArgs/>
+  <CPUset/>
+  <DonateText/>
+  <DonateLink/>
+  <Description>Unbound is a validating, recursive, and caching DNS resolver.</Description>
+  <Networking>
+    <Mode>br0</Mode>
+    <Publish>
+      <Port>
+        <HostPort>53</HostPort>
+        <ContainerPort/>
+        <Protocol>tcp</Protocol>
+      </Port>
+      <Port>
+        <HostPort>53</HostPort>
+        <ContainerPort/>
+        <Protocol>udp</Protocol>
+      </Port>
+    </Publish>
+  </Networking>
+  <Data>
+    <Volume>
+      <HostDir>/mnt/user/appdata/unbound/</HostDir>
+      <ContainerDir>/opt/unbound/etc/unbound/</ContainerDir>
+      <Mode>rw</Mode>
+    </Volume>
+  </Data>
+  <Environment/>
+  <Labels/>
+  <Config Name="Host Port 1" Target="" Default="53" Mode="tcp" Description="Container Port 53" Type="Port" Display="always" Required="true" Mask="false">53</Config>
+  <Config Name="Host Port 2" Target="" Default="53" Mode="udp" Description="Container Port 53" Type="Port" Display="always" Required="true" Mask="false">53</Config>
+  <Config Name="Appdata" Target="/opt/unbound/etc/unbound/" Default="/mnt/user/appdata/unbound/" Mode="rw" Description="Appdata location" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/unbound/</Config>
+</Container>
