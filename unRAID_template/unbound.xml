@@ -15,7 +15,7 @@ Use the ":latest" tag for standalone Unbound use.&#xD;
 Use the ":latest-use-stubby" tag for use with the Stubby container.</Overview>
   <Category>Network:DNS</Category>
   <WebUI/>
-  <TemplateURL></TemplateURL>
+  <TemplateURL>https://github.com/fdm1980/unbound/blob/master/unRAID_template/unbound.xml</TemplateURL>
   <Icon>https://i.imgur.com/cnsNS1O.png</Icon>
   <ExtraParams>--restart=always</ExtraParams>
   <PostArgs/>
